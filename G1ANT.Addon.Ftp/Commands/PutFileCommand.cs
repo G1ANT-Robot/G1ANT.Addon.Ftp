@@ -40,7 +40,7 @@ namespace G1ANT.Addon.Ftp
                 ftpRequest.KeepAlive = FtpSettings.GetInstance().KeepAlive;
                 ftpRequest.Method = WebRequestMethods.Ftp.UploadFile;
                 ftpStream = ftpRequest.GetRequestStream();
-                FileStream localFileStream = new FileStream(arguments.localfile.Value, FileMode.Create);
+                FileStream localFileStream = new FileStream(arguments.localfile.Value, FileMode.Open);
                 byte[] byteBuffer = new byte[bufferSize];
                 int bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
                 try
@@ -51,7 +51,9 @@ namespace G1ANT.Addon.Ftp
                         bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
                     }
                 }
-                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+                catch (Exception exc) {
+                    throw new ApplicationException($"Error occured while sending file to FTP server", exc);
+                }
                 localFileStream.Close();
                 ftpStream.Close();
                 ftpRequest = null;

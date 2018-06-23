@@ -53,7 +53,9 @@ namespace G1ANT.Addon.Ftp
                         bytesRead = ftpStream.Read(byteBuffer, 0, bufferSize);
                     }
                 }
-                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
+                catch (Exception exc) {
+                    throw new ApplicationException($"Error occured while download ftp file", exc);
+                }
                 localFileStream.Close();
                 ftpStream.Close();
                 ftpResponse.Close();
