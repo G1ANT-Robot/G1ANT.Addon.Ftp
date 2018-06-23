@@ -43,22 +43,19 @@ namespace G1ANT.Addon.Ftp
                 FileStream localFileStream = new FileStream(arguments.localfile.Value, FileMode.Open);
                 byte[] byteBuffer = new byte[bufferSize];
                 int bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
-                try
+
+                while (bytesSent != 0)
                 {
-                    while (bytesSent != 0)
-                    {
-                        ftpStream.Write(byteBuffer, 0, bytesSent);
-                        bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
-                    }
+                    ftpStream.Write(byteBuffer, 0, bytesSent);
+                    bytesSent = localFileStream.Read(byteBuffer, 0, bufferSize);
                 }
-                catch (Exception exc) {
-                    throw new ApplicationException($"Error occured while sending file to FTP server", exc);
-                }
+
                 localFileStream.Close();
                 ftpStream.Close();
                 ftpRequest = null;
             }
-            catch (Exception exc) {
+            catch (Exception exc)
+            {
                 throw new ApplicationException($"Error occured while sending file to FTP server", exc);
             }
             return;

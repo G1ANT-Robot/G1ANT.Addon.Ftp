@@ -20,7 +20,7 @@ namespace G1ANT.Addon.Ftp
             [Argument(Required = true, Tooltip = "Path to remote file")]
             public TextStructure remotefile { get; set; } = new TextStructure(string.Empty);
 
-            [Argument(Required = true, Tooltip = "Local file name")]
+            [Argument(Required = true, Tooltip = "Local file name, if exists will be overwritten")]
             public TextStructure localfile { get; set; } = new TextStructure(string.Empty);
 
         }
@@ -45,23 +45,20 @@ namespace G1ANT.Addon.Ftp
                 FileStream localFileStream = new FileStream(arguments.localfile.Value, FileMode.Create);
                 byte[] byteBuffer = new byte[bufferSize];
                 int bytesRead = ftpStream.Read(byteBuffer, 0, bufferSize);
-                try
+
+                while (bytesRead > 0)
                 {
-                    while (bytesRead > 0)
-                    {
-                        localFileStream.Write(byteBuffer, 0, bytesRead);
-                        bytesRead = ftpStream.Read(byteBuffer, 0, bufferSize);
-                    }
+                    localFileStream.Write(byteBuffer, 0, bytesRead);
+                    bytesRead = ftpStream.Read(byteBuffer, 0, bufferSize);
                 }
-                catch (Exception exc) {
-                    throw new ApplicationException($"Error occured while download ftp file", exc);
-                }
+
                 localFileStream.Close();
                 ftpStream.Close();
                 ftpResponse.Close();
                 ftpRequest = null;
             }
-            catch (Exception exc) {
+            catch (Exception exc)
+            {
                 throw new ApplicationException($"Error occured while download ftp file", exc);
             }
             return;

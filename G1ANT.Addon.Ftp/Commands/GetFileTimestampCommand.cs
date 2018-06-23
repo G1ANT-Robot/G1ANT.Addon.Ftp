@@ -35,19 +35,13 @@ namespace G1ANT.Addon.Ftp
                 ftpRequest.UseBinary = FtpSettings.GetInstance().UseBinary;
                 ftpRequest.UsePassive = FtpSettings.GetInstance().UsePassive;
                 ftpRequest.KeepAlive = FtpSettings.GetInstance().KeepAlive;
-
                 ftpRequest.Method = WebRequestMethods.Ftp.GetDateTimestamp;
-                try
+
+                using (FtpWebResponse response = (FtpWebResponse)ftpRequest.GetResponse())
                 {
-                    using (FtpWebResponse response = (FtpWebResponse)ftpRequest.GetResponse())
-                    {
-                        Scripter.Variables.SetVariableValue(arguments.Result.Value, new DateTimeStructure(response.LastModified));
-                    }
+                    Scripter.Variables.SetVariableValue(arguments.Result.Value, new DateTimeStructure(response.LastModified));
                 }
-                catch (Exception exc)
-                {
-                    throw new ApplicationException($"Error occured while get file timestamp: " + exc.Message);
-                }
+
                 ftpRequest = null;
                 return;
             }
