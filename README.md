@@ -9,10 +9,10 @@ ftp.init host ‴ftp.cs.brown.edu‴ user ‴anonymous‴ password ‴test@test.
 
 ftp.get remotefile ‴pub/pscover-1.0.tar.Z‴ localfile  ‴c:\test.txt‴ 
 
-ftp.filesize remotefile ‴pub/pscover-1.0.tar.Z‴ result ♥x
-dialog message ♥x
+ftp.filesize remotefile ‴pub/pscover-1.0.tar.Z‴ result ♥result
+dialog message ♥result
 
 ftp.filetimestamp remotefile ‴pub/pscover-1.0.tar.Z‴ result ♥x
-dialog message ♥x
+dialog message ♥result
 ```
 
