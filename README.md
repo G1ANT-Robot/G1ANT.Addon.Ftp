@@ -12,7 +12,7 @@ ftp.get remotefile ‴pub/pscover-1.0.tar.Z‴ localfile  ‴c:\test.txt‴
 ftp.filesize remotefile ‴pub/pscover-1.0.tar.Z‴ result ♥result
 dialog message ♥result
 
-ftp.filetimestamp remotefile ‴pub/pscover-1.0.tar.Z‴ result ♥x
+ftp.filetimestamp remotefile ‴pub/pscover-1.0.tar.Z‴ result ♥result
 dialog message ♥result
 ```
 
