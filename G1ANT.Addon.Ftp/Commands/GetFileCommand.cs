@@ -12,7 +12,7 @@ namespace G1ANT.Addon.Ftp
         private FtpWebRequest ftpRequest = null;
         private FtpWebResponse ftpResponse = null;
         private Stream ftpStream = null;
-        private int bufferSize = 4096;
+        private readonly int bufferSize = 4096;
 
         public class Arguments : CommandArguments
         {
